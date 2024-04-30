@@ -17,18 +17,17 @@ struct ContentView: View {
                     ProgressView()
                 } else {
                     List {
-                        ForEach(viewModel.categories.sorted(by: { $0.key > $1.key }), id: \.key) {
-                            key, category in
+                        ForEach(viewModel.categories, id: \.id) { category in
                             Section(content: {
                                 ForEach(category.nofications, id: \.id) { notification in
                                     NotificationCell(type: notification.type,
-                                                   date: notification.date,
-                                                   color: notification.severity)
+                                                     date: notification.date,
+                                                     color: notification.severity)
                                     
                                 }
                                 ViewAllCell(notificationCount: String(category.totalCount), categoryId: category.id)
                             }, header: {
-                                Text(key)
+                                Text(category.type)
                             })
                         }
                     }

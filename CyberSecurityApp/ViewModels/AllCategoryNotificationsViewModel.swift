@@ -8,12 +8,16 @@
 import Foundation
 
 final class AllCategoryNotificationsViewModel: ObservableObject {
+    private let pageSize = 10
     let categoryId: Int
+    
     let dataFetcher = CategoriesDataFetcher()
     let dateFormatterHelper: DateFormatterHelperProtocol
     
+    @Published var pageIndex = 1
     @Published var notificationSections: [NotificationsSectionModel] = []
     @Published var isLoading = true
+    @Published var isNextPageLoading = false
     
     init(for categoryId: Int, dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper()) {
         self.categoryId = categoryId
@@ -22,14 +26,16 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     
     func getCategories() async {
         do {
-            let response = try await dataFetcher.getNotifications(categoryId: categoryId, page: 1, pageSize: 99)
+            let response = try await dataFetcher.getNotifications(categoryId: categoryId, page: pageIndex, pageSize: pageSize)
             guard let response = response, !response.isEmpty else { return }
             
             DispatchQueue.main.async { [weak self] in
                 guard let sections = self?.createNotificationsSectionsFromResponse(response: response) else { return }
-                
-                self?.notificationSections = sections
+      
+                self?.notificationSections = self != nil ? self!.notificationSections + sections : sections
                 self?.isLoading = false
+                self?.isNextPageLoading = false
+                self?.pageIndex += 1
             }
         } catch {
             print(error.localizedDescription)

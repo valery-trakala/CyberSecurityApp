@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AllCategoryNotificationsView: View {
     let categoryId: Int
+    
     @StateObject private var viewModel: AllCategoryNotificationsViewModel
     
     init(for categoryId: Int) {
@@ -23,16 +24,32 @@ struct AllCategoryNotificationsView: View {
             } else {
                 List {
                     ForEach(viewModel.notificationSections, id: \.date) { section in
-                            Section(content: {
-                                ForEach(section.notifications, id: \.id) { notification in
-                                    NotificationCell(
-                                        type: notification.type,
-                                        date: notification.date,
-                                        color: notification.severity)
+                        Section(content: {
+                            ForEach(section.notifications, id: \.id) { notification in
+                                NotificationCell(
+                                    type: notification.type,
+                                    date: notification.date,
+                                    color: notification.severity)
+                                .onAppear {
+                                    if isLastItem(notification) {
+                                        viewModel.isNextPageLoading = true
+                                        Task {
+                                            await viewModel.getCategories()
+                                        }
+                                    }
                                 }
-                            }, header: {
-                                Text(section.date)
-                            })
+                            }
+                        }, header: {
+                            Text(section.date)
+                        }, footer: {
+                            if viewModel.isNextPageLoading, section.date == viewModel.notificationSections.last!.date  {
+                                HStack {
+                                    Spacer()
+                                    ProgressView()
+                                    Spacer()
+                                }
+                            }
+                        })
                     }
                 }
             }
@@ -44,6 +61,13 @@ struct AllCategoryNotificationsView: View {
                 await viewModel.getCategories()
             }
         }
+    }
+    
+    private func isLastItem(_ item: CategoryNotificationModel) -> Bool {
+        if let lastItem = viewModel.notificationSections.last!.notifications.last {
+            return item.id == lastItem.id
+        }
+        return false
     }
 }
 
