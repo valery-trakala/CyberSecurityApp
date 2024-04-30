@@ -8,17 +8,13 @@
 import Foundation
 
 protocol DateFormatterHelperProtocol {
-    func formatDate(from: String, to: String) -> String?
+    func formatDate(date: Date, to: String) -> String
 }
 
 final class DateFormatterHelper: DateFormatterHelperProtocol {
     private let dateFormatter = DateFormatter()
     
-    func formatDate(from: String, to: String) -> String? {
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        
-        guard let date = dateFormatter.date(from: from) else { return nil }
-        
+    func formatDate(date: Date, to: String) -> String {
         dateFormatter.dateFormat = to
         return dateFormatter.string(from: date)
     }

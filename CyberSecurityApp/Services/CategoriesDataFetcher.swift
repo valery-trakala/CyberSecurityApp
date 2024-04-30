@@ -60,6 +60,10 @@ final class CategoriesDataFetcher: DataFetcherProtocol {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        
         guard let data = data, let response = try? decoder.decode(T.self, from: data) else {
             print("Decoding error")
             return nil

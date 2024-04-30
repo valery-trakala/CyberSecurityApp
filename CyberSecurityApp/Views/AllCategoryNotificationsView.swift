@@ -28,7 +28,7 @@ struct AllCategoryNotificationsView: View {
                             ForEach(section.notifications, id: \.id) { notification in
                                 NotificationCell(
                                     type: notification.type,
-                                    date: notification.date,
+                                    date: viewModel.dateFormatterHelper.formatDate(date: notification.date, to: "h:mm:ss a"),
                                     color: notification.severity)
                                 .onAppear {
                                     if viewModel.isLastNotification(notification), viewModel.isAllDataLoaded() {

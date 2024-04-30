@@ -18,7 +18,7 @@ struct CategoryNotificationModelResponse: Decodable {
     var categoryId: Int
     var type: String
     var severity: Severity
-    var date: String
+    var date: Date
 }
 
 enum Severity: String, Decodable {

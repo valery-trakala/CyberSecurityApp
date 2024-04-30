@@ -21,7 +21,8 @@ struct ContentView: View {
                             Section(content: {
                                 ForEach(category.nofications, id: \.id) { notification in
                                     NotificationCell(type: notification.type,
-                                                     date: notification.date,
+                                                     date: viewModel.dateFormatterHelper.formatDate(date: notification.date,
+                                                                                                    to: "M/d/yyyy, h:mm a"),
                                                      color: notification.severity)
                                 }
                                 ViewAllCell(

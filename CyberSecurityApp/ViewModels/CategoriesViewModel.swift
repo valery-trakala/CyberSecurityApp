@@ -9,12 +9,15 @@ import Foundation
 
 final class CategoriesViewModel: ObservableObject {
     let dataFetcher: DataFetcherProtocol
+    let dateFormatterHelper: DateFormatterHelperProtocol
     
     @Published var categories: [CategoryModel] = []
     @Published var isLoading = true
     
-    init(dataFetcher: DataFetcherProtocol = CategoriesDataFetcher()) {
+    init(dataFetcher: DataFetcherProtocol = CategoriesDataFetcher(),
+         dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper()) {
         self.dataFetcher = dataFetcher
+        self.dateFormatterHelper = dateFormatterHelper
     }
     
     func getCategories() async {
