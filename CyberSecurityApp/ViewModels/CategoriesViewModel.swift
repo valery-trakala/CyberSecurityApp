@@ -8,7 +8,7 @@
 import Foundation
 
 final class CategoriesViewModel: ObservableObject {
-    let dataFetcher: DataFetcherProtocol
+    private let dataFetcher: DataFetcherProtocol
     let dateFormatterHelper: DateFormatterHelperProtocol
     
     @Published var categories: [CategoryModel] = []

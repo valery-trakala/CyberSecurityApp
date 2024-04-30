@@ -10,12 +10,12 @@ import Foundation
 final class AllCategoryNotificationsViewModel: ObservableObject {
     private let pageSize = 10
     
-    let categoryId: Int
+    private let categoryId: Int
     
-    var loadedNotificationsCount = 0
-    let totalNotificationsCount: Int
+    private var loadedNotificationsCount = 0
+    private let totalNotificationsCount: Int
     
-    let dataFetcher: DataFetcherProtocol
+    private let dataFetcher: DataFetcherProtocol
     let dateFormatterHelper: DateFormatterHelperProtocol
     
     @Published var pageIndex = 1
