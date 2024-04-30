@@ -42,10 +42,7 @@ final class CategoriesDataFetcher {
     
     private func decodeJSON<T: Decodable>(type: T.Type ,data: Data?) -> T? {
         let decoder = JSONDecoder()
-//        let dateFormatter = DateFormatter()
-
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-//        decoder.dateDecodingStrategy = .formatted(dateFormatter)
         
         guard let data = data, let response = try? decoder.decode(T.self, from: data) else {
             print("Decoding error")

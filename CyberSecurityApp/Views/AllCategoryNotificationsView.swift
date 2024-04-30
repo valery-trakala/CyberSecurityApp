@@ -22,18 +22,18 @@ struct AllCategoryNotificationsView: View {
                 ProgressView()
             } else {
                 List {
-//                    ForEach(viewModel.notificationsDates, id: \.self) { date in
-//                            Section(content: {
-//                                ForEach(viewModel.notifications[date]!, id: \.id) { notification in
-//                                    NotificationCell(
-//                                        type: notification.type,
-//                                        date: notification.date,
-//                                        color: notification.severity)
-//                                }
-//                            }, header: {
-//                                Text(date)
-//                            })
-//                    }
+                    ForEach(viewModel.notificationSections, id: \.date) { section in
+                            Section(content: {
+                                ForEach(section.notifications, id: \.id) { notification in
+                                    NotificationCell(
+                                        type: notification.type,
+                                        date: notification.date,
+                                        color: notification.severity)
+                                }
+                            }, header: {
+                                Text(section.date)
+                            })
+                    }
                 }
             }
         }

@@ -10,7 +10,7 @@ import Foundation
 final class CategoriesViewModel: ObservableObject {
     let dataFetcher = CategoriesDataFetcher()
     
-    @Published var categories: [String: CategoriesModel] = [:]
+    @Published var categories: [String: CategoryModel] = [:]
     @Published var isLoading = true
     
     func getCategories() async throws {
@@ -35,7 +35,7 @@ final class CategoriesViewModel: ObservableObject {
                 for (index, category) in response.enumerated() {
                     guard let notifications = combinedCategories[index] else { continue }
                     
-                    self?.categories[category.type] = CategoriesModel(
+                    self?.categories[category.type] = CategoryModel(
                         id: category.id,
                         type: category.type,
                         totalCount: category.notifications,

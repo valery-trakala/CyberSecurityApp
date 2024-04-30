@@ -11,8 +11,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     let categoryId: Int
     let dataFetcher = CategoriesDataFetcher()
     
-    @Published var notifications: [String: [CategoryNotificationModel]] = [:]
-    @Published var notificationsDates: [String] = []
+    @Published var notificationSections: [AllNotificationsSectionModel] = []
     @Published var isLoading = true
     
     init(for categoryId: Int) {
@@ -25,39 +24,33 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
             guard let response = response, !response.isEmpty else { return }
             
             DispatchQueue.main.async { [weak self] in
-                guard let (notifications, notificationsDates) = self?.parseNotificationsResponse(response: response) else { return }
+                guard let sections = self?.parseNotificationsResponse(response: response) else { return }
                 
-                self?.notificationsDates = notificationsDates
-                self?.notifications = notifications
+                self?.notificationSections = sections
                 self?.isLoading = false
             }
-            
-            
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    private func parseNotificationsResponse(response: [CategoryNotificationModel]) -> (
-        [String: [CategoryNotificationModel]], [String]
-    )? {
-        var configuredNotifications:[String: [CategoryNotificationModel]] = [:]
-        var sortedNoficatificationsDate: [String] = []
+    private func parseNotificationsResponse(response: [CategoryNotificationModel]) -> [AllNotificationsSectionModel]? {
+        var sections: [AllNotificationsSectionModel] = []
         
         for (_, notification) in response.enumerated() {
             let formattedDate = self.formatDate(from: notification.date)
             guard let date = formattedDate else { return nil }
+       
             
-            if var notificationsArray = configuredNotifications[date] {
-                notificationsArray.append(notification)
-                configuredNotifications[date] = notificationsArray
+            if let index = sections.firstIndex(where: { $0.date == date }) {
+                sections[index].notifications.append(notification)
             } else {
-                configuredNotifications[date] = [notification]
-                sortedNoficatificationsDate.append(date)
+                sections.append(AllNotificationsSectionModel(notifications: [notification], date: date))
             }
+            
         }
         
-        return (configuredNotifications, sortedNoficatificationsDate)
+        return sections
     }
     
     private func formatDate(from: String, to: String = "MMM dd, yyyy") -> String? {

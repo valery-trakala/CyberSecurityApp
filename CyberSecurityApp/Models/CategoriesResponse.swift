@@ -30,10 +30,14 @@ enum Severity: String, Decodable {
     case critical = "Critical"
 }
 
-struct CategoriesModel {
+struct CategoryModel {
     var id: Int
     var type: String
     var totalCount: Int
     var nofications: [CategoryNotificationModel]
 }
 
+struct AllNotificationsSectionModel {
+    var notifications: [CategoryNotificationModel]
+    var date: String
+}
