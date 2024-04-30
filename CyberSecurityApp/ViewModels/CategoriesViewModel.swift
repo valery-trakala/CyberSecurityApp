@@ -8,9 +8,9 @@
 import Foundation
 
 final class CategoriesViewModel: ObservableObject {
-    let dataFetcher = NetworkDataFetcher()
+    let dataFetcher = CategoriesDataFetcher()
     
-    @Published var categories: [String: Categories] = [:]
+    @Published var categories: [String: CategoriesModel] = [:]
     @Published var isLoading = true
     
     func getCategories() async throws {
@@ -18,40 +18,35 @@ final class CategoriesViewModel: ObservableObject {
             let response = try await dataFetcher.getCategories()
             
             guard let response = response, !response.isEmpty else { return }
+            //TODO: try to handle it by "for ASYNC _ in"
+            //            var asyncTasks = [Task<[CategoryNotification], Error>]()
+            //            for category in response {
+            //                asyncTasks.append(Task {
+            //                    try await dataFetcher.getNotifications(categoryId: category.id, page: 1, pageSize: 3)
+            //                })
+            //            }
             
-            async let networkCategories = dataFetcher.getNotifications(categoryId: response[0].id)
-            async let browserCategories = dataFetcher.getNotifications(categoryId: response[1].id)
+            async let networkNotifications = dataFetcher.getNotifications(categoryId: response[0].id)
+            async let browserNotifications = dataFetcher.getNotifications(categoryId: response[1].id)
             
-            let combinedCategories = try await [networkCategories, browserCategories]
-            
-            guard let networkCategories = combinedCategories[0], let browserCategories = combinedCategories[1] else {
-                return
-            }
+            let combinedCategories = try await [networkNotifications, browserNotifications]
             
             DispatchQueue.main.async { [weak self] in
-                self?.categories[response[0].type] = Categories(
-                    type: response[0].type,
-                    totalCount: response[0].notifications,
-                    nofications: networkCategories)
-                
-                self?.categories[response[1].type] = Categories(
-                    type: response[1].type,
-                    totalCount: response[1].notifications,
-                    nofications: browserCategories)
-                
+                for (index, category) in response.enumerated() {
+                    guard let notifications = combinedCategories[index] else { continue }
+                    
+                    self?.categories[category.type] = CategoriesModel(
+                        type: category.type,
+                        totalCount: category.notifications,
+                        nofications: notifications)
+                }
                 self?.isLoading = false
             }
-
+            
         } catch {
             print(error.localizedDescription)
         }
     }
-    
-    func getSpecialCategories(id: Int) {
-      
-    }
-    
-     
 }
 
 

@@ -15,7 +15,7 @@ struct CategoriesResponse: Decodable {
     var notifications: Int
 }
 
-struct CategoryNotification: Decodable {
+struct CategoryNotificationModel: Decodable {
     var id: Int
     var categoryId: Int
     var type: String
@@ -30,9 +30,9 @@ enum Severity: String, Decodable {
     case critical = "Critical"
 }
 
-struct Categories {
+struct CategoriesModel {
     var type: String
     var totalCount: Int
-    var nofications: [CategoryNotification]
+    var nofications: [CategoryNotificationModel]
 }
 

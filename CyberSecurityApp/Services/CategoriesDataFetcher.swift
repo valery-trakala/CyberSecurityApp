@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkDataFetcher {
+final class CategoriesDataFetcher {
     func getCategories() async throws -> [CategoriesResponse]? {
         let path = "https://threats.chipp.dev/categories"
         
@@ -15,7 +15,6 @@ final class NetworkDataFetcher {
             print("Invalid URL")
             return nil
         }
-        
         let request = createRequest(url: url, params: nil)
         
         let (data, _) = try await URLSession.shared.data(for: request)
@@ -24,7 +23,7 @@ final class NetworkDataFetcher {
         return response
     }
     
-    func getNotifications(categoryId: Int) async throws -> [CategoryNotification]? {
+    func getNotifications(categoryId: Int, page: Int = 1, pageSize: Int = 3) async throws -> [CategoryNotificationModel]? {
         let path = "https://threats.chipp.dev/categories/\(categoryId)/threats"
         
         guard let url = URL(string: path) else {
@@ -32,10 +31,11 @@ final class NetworkDataFetcher {
             return nil
         }
         
-        let request = createRequest(url: url, params: nil)
+        let params = ["page": String(page), "pageSize": String(pageSize)]
+        let request = createRequest(url: url, params: params)
         
         let (data, _) = try await URLSession.shared.data(for: request)
-        guard let response = decodeJSON(type: [CategoryNotification].self, data: data) else { return nil }
+        guard let response = decodeJSON(type: [CategoryNotificationModel].self, data: data) else { return nil }
         
         return response
     }
@@ -55,7 +55,7 @@ final class NetworkDataFetcher {
         var request = URLRequest(url: url)
         let requestId = UUID().uuidString
         request.addValue(requestId, forHTTPHeaderField: "X-Request-Id")
-        
+
         guard let params = params, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return request }
 
         components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
