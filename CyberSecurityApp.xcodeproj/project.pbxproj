@@ -16,7 +16,7 @@
 		CC0243C72BDFFF8C006F5DAF /* CyberSecurityAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243C62BDFFF8C006F5DAF /* CyberSecurityAppUITestsLaunchTests.swift */; };
 		CC0243DD2BE00469006F5DAF /* CategoriesDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243DC2BE00469006F5DAF /* CategoriesDataFetcher.swift */; };
 		CC0243DF2BE0080A006F5DAF /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243DE2BE0080A006F5DAF /* CategoriesViewModel.swift */; };
-		CC0243E12BE00BBE006F5DAF /* CategoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E02BE00BBE006F5DAF /* CategoriesResponse.swift */; };
+		CC0243E12BE00BBE006F5DAF /* CategoriesModelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E02BE00BBE006F5DAF /* CategoriesModelResponse.swift */; };
 		CC0243E32BE0DE04006F5DAF /* AllCategoryNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E22BE0DE04006F5DAF /* AllCategoryNotificationsView.swift */; };
 		CC0243E52BE0DE3E006F5DAF /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E42BE0DE3E006F5DAF /* NotificationCell.swift */; };
 		CC0243E72BE0DE71006F5DAF /* ViewAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E62BE0DE71006F5DAF /* ViewAllCell.swift */; };
@@ -54,7 +54,7 @@
 		CC0243C62BDFFF8C006F5DAF /* CyberSecurityAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberSecurityAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CC0243DC2BE00469006F5DAF /* CategoriesDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesDataFetcher.swift; sourceTree = "<group>"; };
 		CC0243DE2BE0080A006F5DAF /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
-		CC0243E02BE00BBE006F5DAF /* CategoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesResponse.swift; sourceTree = "<group>"; };
+		CC0243E02BE00BBE006F5DAF /* CategoriesModelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesModelResponse.swift; sourceTree = "<group>"; };
 		CC0243E22BE0DE04006F5DAF /* AllCategoryNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryNotificationsView.swift; sourceTree = "<group>"; };
 		CC0243E42BE0DE3E006F5DAF /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		CC0243E62BE0DE71006F5DAF /* ViewAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllCell.swift; sourceTree = "<group>"; };
@@ -150,7 +150,7 @@
 		CC0243D32BE001F2006F5DAF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CC0243E02BE00BBE006F5DAF /* CategoriesResponse.swift */,
+				CC0243E02BE00BBE006F5DAF /* CategoriesModelResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 				CC0243DF2BE0080A006F5DAF /* CategoriesViewModel.swift in Sources */,
 				CC0243E32BE0DE04006F5DAF /* AllCategoryNotificationsView.swift in Sources */,
 				CC0243EC2BE11D9C006F5DAF /* DateFormatterHelper.swift in Sources */,
-				CC0243E12BE00BBE006F5DAF /* CategoriesResponse.swift in Sources */,
+				CC0243E12BE00BBE006F5DAF /* CategoriesModelResponse.swift in Sources */,
 				CC0243DD2BE00469006F5DAF /* CategoriesDataFetcher.swift in Sources */,
 				CC0243E52BE0DE3E006F5DAF /* NotificationCell.swift in Sources */,
 			);

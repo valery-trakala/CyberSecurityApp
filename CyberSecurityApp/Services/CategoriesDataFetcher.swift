@@ -9,7 +9,7 @@ import Foundation
 
 
 final class CategoriesDataFetcher {
-    func getCategories() async throws -> [CategoriesResponse]? {
+    func getCategories() async throws -> [CategoriesModelResponse]? {
         do {
             let path = "https://threats.chipp.dev/categories"
             
@@ -20,7 +20,7 @@ final class CategoriesDataFetcher {
             let request = createRequest(url: url, params: nil)
             
             let (data, _) = try await URLSession.shared.data(for: request)
-            guard let response = decodeJSON(type: [CategoriesResponse].self, data: data) else { return nil }
+            guard let response = decodeJSON(type: [CategoriesModelResponse].self, data: data) else { return nil }
             
             return response
         } catch {
@@ -29,7 +29,7 @@ final class CategoriesDataFetcher {
         }
     }
     
-    func getNotifications(categoryId: Int, page: Int = 1, pageSize: Int = 3) async throws -> [CategoryNotificationModel]? {
+    func getNotifications(categoryId: Int, page: Int = 1, pageSize: Int = 3) async throws -> [CategoryNotificationModelResponse]? {
         let path = "https://threats.chipp.dev/categories/\(categoryId)/threats"
         
         guard let url = URL(string: path) else {
@@ -41,7 +41,7 @@ final class CategoriesDataFetcher {
         let request = createRequest(url: url, params: params)
         
         let (data, _) = try await URLSession.shared.data(for: request)
-        guard let response = decodeJSON(type: [CategoryNotificationModel].self, data: data) else { return nil }
+        guard let response = decodeJSON(type: [CategoryNotificationModelResponse].self, data: data) else { return nil }
         
         return response
     }

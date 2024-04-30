@@ -48,7 +48,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
         }
     }
     
-    private func createNotificationsSectionsFromResponse(response: [CategoryNotificationModel]) -> [NotificationsSectionModel]? {
+    private func createNotificationsSectionsFromResponse(response: [CategoryNotificationModelResponse]) -> [NotificationsSectionModel]? {
         var sections: [NotificationsSectionModel] = []
         
         for (_, notification) in response.enumerated() {
@@ -58,7 +58,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
                 sections[index].notifications.append(notification)
             } else {
                 guard let notificationDate = dateFormatterHelper.formatDate(from: notification.date, to: "h:mm:ss a") else { return nil }
-                let formattedNotification = CategoryNotificationModel(
+                let formattedNotification = CategoryNotificationModelResponse(
                     id: notification.id,
                     categoryId: notification.categoryId,
                     type: notification.type,
@@ -72,7 +72,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
         return sections
     }
     
-    func isLastNotification(_ notification: CategoryNotificationModel) -> Bool {
+    func isLastNotification(_ notification: CategoryNotificationModelResponse) -> Bool {
         let lastNotification = notificationSections.last!.notifications.last!
         return lastNotification.id == notification.id
     }

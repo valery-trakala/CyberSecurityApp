@@ -9,13 +9,13 @@ import Foundation
 
 
 
-struct CategoriesResponse: Decodable {
+struct CategoriesModelResponse: Decodable {
     var id: Int
     var type: String
     var notifications: Int
 }
 
-struct CategoryNotificationModel: Decodable {
+struct CategoryNotificationModelResponse: Decodable {
     var id: Int
     var categoryId: Int
     var type: String
@@ -34,10 +34,10 @@ struct CategoryModel {
     var id: Int
     var type: String
     var totalCount: Int
-    var nofications: [CategoryNotificationModel]
+    var nofications: [CategoryNotificationModelResponse]
 }
 
 struct NotificationsSectionModel {
-    var notifications: [CategoryNotificationModel]
+    var notifications: [CategoryNotificationModelResponse]
     var date: String
 }
