@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoficationCell: View {
+struct NotificationCell: View {
     let size: CGFloat = 10
     let type: String
     let date: String

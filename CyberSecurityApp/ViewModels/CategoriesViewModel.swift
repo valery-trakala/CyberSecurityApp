@@ -36,6 +36,7 @@ final class CategoriesViewModel: ObservableObject {
                     guard let notifications = combinedCategories[index] else { continue }
                     
                     self?.categories[category.type] = CategoriesModel(
+                        id: category.id,
                         type: category.type,
                         totalCount: category.notifications,
                         nofications: notifications)

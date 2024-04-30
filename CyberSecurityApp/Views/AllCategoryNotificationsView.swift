@@ -8,12 +8,46 @@
 import SwiftUI
 
 struct AllCategoryNotificationsView: View {
+    let categoryId: Int
+    @StateObject private var viewModel: AllCategoryNotificationsViewModel
+    
+    init(for categoryId: Int) {
+        self.categoryId = categoryId
+        self._viewModel = StateObject(wrappedValue: AllCategoryNotificationsViewModel(for: categoryId))
+    }
     
     var body: some View {
-        Text("AllCategoryNotificationsView")
+        VStack {
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
+                List {
+//                    ForEach(viewModel.notificationsDates, id: \.self) { date in
+//                            Section(content: {
+//                                ForEach(viewModel.notifications[date]!, id: \.id) { notification in
+//                                    NotificationCell(
+//                                        type: notification.type,
+//                                        date: notification.date,
+//                                        color: notification.severity)
+//                                }
+//                            }, header: {
+//                                Text(date)
+//                            })
+//                    }
+                }
+            }
+        }
+        .navigationTitle("Browsing")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            Task {
+                try await viewModel.getCategories()
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
 }
+

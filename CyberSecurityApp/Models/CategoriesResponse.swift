@@ -31,6 +31,7 @@ enum Severity: String, Decodable {
 }
 
 struct CategoriesModel {
+    var id: Int
     var type: String
     var totalCount: Int
     var nofications: [CategoryNotificationModel]

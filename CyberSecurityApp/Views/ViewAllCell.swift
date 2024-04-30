@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ViewAllCell: View {
     let notificationCount: String
+    let categoryId: Int
     
     var body: some View {
-        NavigationLink {
-            AllCategoryNotificationsView()
-        } label: {
+
+        NavigationLink(destination: AllCategoryNotificationsView(for: categoryId)) {
             Text("View All (\(notificationCount) more)")
                 .font(.headline)
                 .foregroundStyle(.blue)

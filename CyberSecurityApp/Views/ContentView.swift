@@ -17,20 +17,20 @@ struct ContentView: View {
                     ProgressView()
                 } else {
                     List {
-                        ForEach(Array(viewModel.categories.sorted(by: { $0.key > $1.key })), id: \.key) {
-                            key, category in
-                            Section(content: {
-                                ForEach(category.nofications, id: \.id) { notification in
-                                    NoficationCell(type: notification.type,
-                                                   date: notification.date,
-                                                   color: notification.severity)
-                                    
-                                }
-                                ViewAllCell(notificationCount: String(category.totalCount))
-                            }, header: {
-                                Text(key)
-                            })
-                        }
+//                        ForEach(viewModel.categories.sorted(by: { $0.key > $1.key }), id: \.key) {
+//                            key, category in
+//                            Section(content: {
+//                                ForEach(category.nofications, id: \.id) { notification in
+//                                    NotificationCell(type: notification.type,
+//                                                   date: notification.date,
+//                                                   color: notification.severity)
+//                                    
+//                                }
+//                                ViewAllCell(notificationCount: String(category.totalCount), categoryId: category.id)
+//                            }, header: {
+//                                Text(key)
+//                            })
+//                        }
                     }
                 }
             }.onAppear(perform: {
