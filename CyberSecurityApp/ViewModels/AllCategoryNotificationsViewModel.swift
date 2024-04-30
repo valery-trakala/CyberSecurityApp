@@ -9,7 +9,11 @@ import Foundation
 
 final class AllCategoryNotificationsViewModel: ObservableObject {
     private let pageSize = 10
+    
     let categoryId: Int
+    
+    var loadedNotificationsCount = 0
+    let totalNotificationsCount: Int
     
     let dataFetcher = CategoriesDataFetcher()
     let dateFormatterHelper: DateFormatterHelperProtocol
@@ -19,15 +23,17 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var isNextPageLoading = false
     
-    init(for categoryId: Int, dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper()) {
+    init(for categoryId: Int, totalCount: Int, dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper()) {
         self.categoryId = categoryId
         self.dateFormatterHelper = dateFormatterHelper
+        self.totalNotificationsCount = totalCount
     }
     
     func getCategories() async {
         do {
             let response = try await dataFetcher.getNotifications(categoryId: categoryId, page: pageIndex, pageSize: pageSize)
             guard let response = response, !response.isEmpty else { return }
+            loadedNotificationsCount += response.count
             
             DispatchQueue.main.async { [weak self] in
                 guard let sections = self?.createNotificationsSectionsFromResponse(response: response) else { return }
@@ -64,5 +70,19 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
         }
         
         return sections
+    }
+    
+    func isLastNotification(_ notification: CategoryNotificationModel) -> Bool {
+        let lastNotification = notificationSections.last!.notifications.last!
+        return lastNotification.id == notification.id
+    }
+    
+    func isLastSection(_ section: NotificationsSectionModel) -> Bool {
+        let lastSection = notificationSections.last!
+        return lastSection.date == section.date
+    }
+    
+    func isAllDataLoaded() -> Bool {
+        return loadedNotificationsCount != totalNotificationsCount
     }
 }

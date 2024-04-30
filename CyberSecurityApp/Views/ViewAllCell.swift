@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct ViewAllCell: View {
-    let notificationCount: String
+    let totalCount: Int
     let categoryId: Int
+    let categoryType: String
     
     var body: some View {
-
-        NavigationLink(destination: AllCategoryNotificationsView(for: categoryId)) {
-            Text("View All (\(notificationCount) more)")
-                .font(.headline)
-                .foregroundStyle(.blue)
-        }
+        NavigationLink(destination: AllCategoryNotificationsView(
+            for: categoryId,
+            type: categoryType,
+            totalCount: totalCount)) {
+                Text("View All (\(totalCount) more)")
+                    .font(.headline)
+                    .foregroundStyle(.blue)
+            }
     }
 }
 

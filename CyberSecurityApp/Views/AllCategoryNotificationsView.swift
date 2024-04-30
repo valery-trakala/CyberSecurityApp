@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AllCategoryNotificationsView: View {
-    let categoryId: Int
+    let type: String
     
     @StateObject private var viewModel: AllCategoryNotificationsViewModel
     
-    init(for categoryId: Int) {
-        self.categoryId = categoryId
-        self._viewModel = StateObject(wrappedValue: AllCategoryNotificationsViewModel(for: categoryId))
+    init(for categoryId: Int, type: String, totalCount: Int) {
+        self.type = type
+        self._viewModel = StateObject(wrappedValue: AllCategoryNotificationsViewModel(for: categoryId, totalCount: totalCount))
     }
     
     var body: some View {
@@ -23,7 +23,7 @@ struct AllCategoryNotificationsView: View {
                 ProgressView()
             } else {
                 List {
-                    ForEach(viewModel.notificationSections, id: \.date) { section in
+                    ForEach(Array(viewModel.notificationSections.enumerated()), id: \.element.date) { (index, section) in
                         Section(content: {
                             ForEach(section.notifications, id: \.id) { notification in
                                 NotificationCell(
@@ -31,7 +31,7 @@ struct AllCategoryNotificationsView: View {
                                     date: notification.date,
                                     color: notification.severity)
                                 .onAppear {
-                                    if isLastItem(notification) {
+                                    if viewModel.isLastNotification(notification), viewModel.isAllDataLoaded() {
                                         viewModel.isNextPageLoading = true
                                         Task {
                                             await viewModel.getCategories()
@@ -42,32 +42,25 @@ struct AllCategoryNotificationsView: View {
                         }, header: {
                             Text(section.date)
                         }, footer: {
-                            if viewModel.isNextPageLoading, section.date == viewModel.notificationSections.last!.date  {
+                            if viewModel.isNextPageLoading, viewModel.isLastSection(section)  {
                                 HStack {
                                     Spacer()
-                                    ProgressView()
+                                    ProgressView("Loading...")
                                     Spacer()
-                                }
+                                }.padding()
                             }
                         })
                     }
                 }
             }
         }
-        .navigationTitle("Browsing")
+        .navigationTitle(type)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             Task {
                 await viewModel.getCategories()
             }
         }
-    }
-    
-    private func isLastItem(_ item: CategoryNotificationModel) -> Bool {
-        if let lastItem = viewModel.notificationSections.last!.notifications.last {
-            return item.id == lastItem.id
-        }
-        return false
     }
 }
 

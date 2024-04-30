@@ -21,11 +21,14 @@ struct ContentView: View {
                             Section(content: {
                                 ForEach(category.nofications, id: \.id) { notification in
                                     NotificationCell(type: notification.type,
-                                                     date: notification.date,
-                                                     color: notification.severity)
+                                                   date: notification.date,
+                                                   color: notification.severity)
                                     
                                 }
-                                ViewAllCell(notificationCount: String(category.totalCount), categoryId: category.id)
+                                ViewAllCell(
+                                    totalCount: category.totalCount,
+                                    categoryId: category.id,
+                                    categoryType: category.type)
                             }, header: {
                                 Text(category.type)
                             })
