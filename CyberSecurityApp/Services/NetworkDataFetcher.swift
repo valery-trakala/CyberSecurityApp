@@ -10,13 +10,14 @@ import Foundation
 final class NetworkDataFetcher {
     func getCategories() async throws -> [CategoriesResponse]? {
         let path = "https://threats.chipp.dev/categories"
+        
         guard let url = URL(string: path) else {
             print("Invalid URL")
             return nil
         }
         
-        let request = createRequest(url: url)
-
+        let request = createRequest(url: url, params: nil)
+        
         let (data, _) = try await URLSession.shared.data(for: request)
         guard let response = decodeJSON(type: [CategoriesResponse].self, data: data) else { return nil }
         
@@ -25,19 +26,20 @@ final class NetworkDataFetcher {
     
     func getNotifications(categoryId: Int) async throws -> [CategoryNotification]? {
         let path = "https://threats.chipp.dev/categories/\(categoryId)/threats"
+        
         guard let url = URL(string: path) else {
             print("Invalid URL")
             return nil
         }
         
-        let request = createRequest(url: url)
+        let request = createRequest(url: url, params: nil)
         
         let (data, _) = try await URLSession.shared.data(for: request)
         guard let response = decodeJSON(type: [CategoryNotification].self, data: data) else { return nil }
         
         return response
     }
-        
+    
     private func decodeJSON<T: Decodable>(type: T.Type ,data: Data?) -> T? {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -49,10 +51,15 @@ final class NetworkDataFetcher {
         return response
     }
     
-    private func createRequest(url: URL) -> URLRequest {
+    private func createRequest(url: URL, params: [String: String]?) -> URLRequest {
         var request = URLRequest(url: url)
         let requestId = UUID().uuidString
         request.addValue(requestId, forHTTPHeaderField: "X-Request-Id")
+        
+        guard let params = params, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return request }
+
+        components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
+        request.url = components.url
         
         return request
     }

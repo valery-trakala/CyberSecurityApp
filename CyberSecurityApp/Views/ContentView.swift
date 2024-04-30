@@ -25,8 +25,8 @@ struct ContentView: View {
                                                    date: notification.date,
                                                    color: notification.severity)
                                     
-//                                    ViewAllCell(notificationCount: "20")
                                 }
+                                ViewAllCell(notificationCount: String(category.totalCount))
                             }, header: {
                                 Text(key)
                             })
