@@ -10,11 +10,11 @@ import SwiftUI
 struct AllCategoryNotificationsView: View {
     let type: String
     
-    @StateObject private var viewModel: AllCategoryNotificationsViewModel
+    @ObservedObject private var viewModel: AllCategoryNotificationsViewModel
     
     init(for categoryId: Int, type: String, totalCount: Int) {
         self.type = type
-        self._viewModel = StateObject(wrappedValue: AllCategoryNotificationsViewModel(for: categoryId, totalCount: totalCount))
+        self.viewModel = AllCategoryNotificationsViewModel(for: categoryId, totalCount: totalCount)
     }
     
     var body: some View {
