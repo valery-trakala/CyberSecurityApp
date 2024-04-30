@@ -41,12 +41,13 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
             loadedNotificationsCount += response.count
             
             DispatchQueue.main.async { [weak self] in
-                guard let sections = self?.createNotificationsSectionsFromResponse(response: response) else { return }
+                guard let self = self else { return }
                 
-                self?.notificationSections = self != nil ? self!.notificationSections + sections : sections
-                self?.isLoading = false
-                self?.isNextPageLoading = false
-                self?.pageIndex += 1
+                let sections = self.createNotificationsSectionsFromResponse(response: response)
+                self.notificationSections = self.notificationSections + sections
+                self.isLoading = false
+                self.isNextPageLoading = false
+                self.pageIndex += 1
             }
         } catch {
             print(error.localizedDescription)
