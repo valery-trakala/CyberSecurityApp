@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct CategoriesModelResponse: Decodable {
     var id: Int
     var type: String

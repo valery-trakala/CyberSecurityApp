@@ -7,8 +7,18 @@
 
 import Foundation
 
+protocol DataFetcherProtocol {
+    func getCategories() async throws -> [CategoriesModelResponse]?
+    func getNotifications(categoryId: Int, page: Int , pageSize: Int) async throws -> [CategoryNotificationModelResponse]?
+}
 
-final class CategoriesDataFetcher {
+final class CategoriesDataFetcher: DataFetcherProtocol {
+    let urlSession: URLSession
+    
+    init(urlSession: URLSession = .shared) {
+        self.urlSession = urlSession
+    }
+    
     func getCategories() async throws -> [CategoriesModelResponse]? {
         do {
             let path = "https://threats.chipp.dev/categories"
@@ -19,7 +29,7 @@ final class CategoriesDataFetcher {
             }
             let request = createRequest(url: url, params: nil)
             
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, _) = try await urlSession.data(for: request)
             guard let response = decodeJSON(type: [CategoriesModelResponse].self, data: data) else { return nil }
             
             return response
@@ -40,7 +50,7 @@ final class CategoriesDataFetcher {
         let params = ["page": String(page), "pageSize": String(pageSize)]
         let request = createRequest(url: url, params: params)
         
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await urlSession.data(for: request)
         guard let response = decodeJSON(type: [CategoryNotificationModelResponse].self, data: data) else { return nil }
         
         return response

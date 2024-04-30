@@ -15,7 +15,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     var loadedNotificationsCount = 0
     let totalNotificationsCount: Int
     
-    let dataFetcher = CategoriesDataFetcher()
+    let dataFetcher: DataFetcherProtocol
     let dateFormatterHelper: DateFormatterHelperProtocol
     
     @Published var pageIndex = 1
@@ -23,10 +23,15 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var isNextPageLoading = false
     
-    init(for categoryId: Int, totalCount: Int, dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper()) {
+    init(for categoryId: Int,
+         totalCount: Int,
+         dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper(),
+         dataFetcher: DataFetcherProtocol = CategoriesDataFetcher()
+    ) {
         self.categoryId = categoryId
-        self.dateFormatterHelper = dateFormatterHelper
         self.totalNotificationsCount = totalCount
+        self.dateFormatterHelper = dateFormatterHelper
+        self.dataFetcher = dataFetcher
     }
     
     func getCategories() async {
@@ -35,7 +40,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
             guard let response = response, !response.isEmpty else { return }
             loadedNotificationsCount += response.count
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let sections = self?.createNotificationsSectionsFromResponse(response: response) else { return }
                 
                 self?.notificationSections = self != nil ? self!.notificationSections + sections : sections
@@ -73,12 +78,12 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     }
     
     func isLastNotification(_ notification: CategoryNotificationModelResponse) -> Bool {
-        let lastNotification = notificationSections.last!.notifications.last!
+        guard let lastSection = notificationSections.last, let lastNotification = lastSection.notifications.last else { return false }
         return lastNotification.id == notification.id
     }
     
     func isLastSection(_ section: NotificationsSectionModel) -> Bool {
-        let lastSection = notificationSections.last!
+        guard let lastSection = notificationSections.last else { return false }
         return lastSection.date == section.date
     }
     

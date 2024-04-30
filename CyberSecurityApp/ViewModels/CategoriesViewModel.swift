@@ -8,12 +8,12 @@
 import Foundation
 
 final class CategoriesViewModel: ObservableObject {
-    let dataFetcher: CategoriesDataFetcher
+    let dataFetcher: DataFetcherProtocol
     
     @Published var categories: [CategoryModel] = []
     @Published var isLoading = true
     
-    init(dataFetcher: CategoriesDataFetcher = CategoriesDataFetcher()) {
+    init(dataFetcher: DataFetcherProtocol = CategoriesDataFetcher()) {
         self.dataFetcher = dataFetcher
     }
     
@@ -25,8 +25,10 @@ final class CategoriesViewModel: ObservableObject {
             //TODO: try to handle it by "for ASYNC _ in"
             //            var asyncNotificaitonTasks = [Task<[CategoryNotificationModel], Error>]()
             
-            async let networkNotifications = dataFetcher.getNotifications(categoryId: response[0].id)
-            async let browserNotifications = dataFetcher.getNotifications(categoryId: response[1].id)
+            let page = 1
+            let pagesize = 3
+            async let networkNotifications = dataFetcher.getNotifications(categoryId: response[0].id, page: page, pageSize: pagesize)
+            async let browserNotifications = dataFetcher.getNotifications(categoryId: response[1].id, page: page, pageSize: pagesize)
             
             let combinedNotifications = try await [networkNotifications, browserNotifications]
             
