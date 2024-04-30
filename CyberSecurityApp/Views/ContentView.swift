@@ -35,7 +35,7 @@ struct ContentView: View {
                 }
             }.onAppear(perform: {
                 Task {
-                    try await viewModel.getCategories()
+                    await viewModel.getCategories()
                 }
             }).navigationTitle("Categories")
         }

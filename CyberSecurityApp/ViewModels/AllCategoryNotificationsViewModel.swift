@@ -10,21 +10,23 @@ import Foundation
 final class AllCategoryNotificationsViewModel: ObservableObject {
     let categoryId: Int
     let dataFetcher = CategoriesDataFetcher()
+    let dateFormatterHelper: DateFormatterHelperProtocol
     
-    @Published var notificationSections: [AllNotificationsSectionModel] = []
+    @Published var notificationSections: [NotificationsSectionModel] = []
     @Published var isLoading = true
     
-    init(for categoryId: Int) {
+    init(for categoryId: Int, dateFormatterHelper: DateFormatterHelperProtocol = DateFormatterHelper()) {
         self.categoryId = categoryId
+        self.dateFormatterHelper = dateFormatterHelper
     }
     
-    func getCategories() async throws {
+    func getCategories() async {
         do {
             let response = try await dataFetcher.getNotifications(categoryId: categoryId, page: 1, pageSize: 99)
             guard let response = response, !response.isEmpty else { return }
             
             DispatchQueue.main.async { [weak self] in
-                guard let sections = self?.parseNotificationsResponse(response: response) else { return }
+                guard let sections = self?.createNotificationsSectionsFromResponse(response: response) else { return }
                 
                 self?.notificationSections = sections
                 self?.isLoading = false
@@ -34,36 +36,27 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
         }
     }
     
-    private func parseNotificationsResponse(response: [CategoryNotificationModel]) -> [AllNotificationsSectionModel]? {
-        var sections: [AllNotificationsSectionModel] = []
+    private func createNotificationsSectionsFromResponse(response: [CategoryNotificationModel]) -> [NotificationsSectionModel]? {
+        var sections: [NotificationsSectionModel] = []
         
         for (_, notification) in response.enumerated() {
-            let formattedDate = self.formatDate(from: notification.date)
-            guard let date = formattedDate else { return nil }
-       
+            guard let sectionDate = dateFormatterHelper.formatDate(from: notification.date, to: "MMM dd, yyyy") else { return nil }
             
-            if let index = sections.firstIndex(where: { $0.date == date }) {
+            if let index = sections.firstIndex(where: { $0.date == sectionDate }) {
                 sections[index].notifications.append(notification)
             } else {
-                sections.append(AllNotificationsSectionModel(notifications: [notification], date: date))
+                guard let notificationDate = dateFormatterHelper.formatDate(from: notification.date, to: "h:mm:ss a") else { return nil }
+                let formattedNotification = CategoryNotificationModel(
+                    id: notification.id,
+                    categoryId: notification.categoryId,
+                    type: notification.type,
+                    severity: notification.severity,
+                    date: notificationDate)
+                
+                sections.append(NotificationsSectionModel(notifications: [formattedNotification], date: sectionDate))
             }
-            
         }
         
         return sections
-    }
-    
-    private func formatDate(from: String, to: String = "MMM dd, yyyy") -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        
-        guard let date = dateFormatter.date(from: from) else { return nil }
-        
-        let newDateFormatter = DateFormatter()
-        newDateFormatter.dateFormat = to
-        
-        let newDateString = newDateFormatter.string(from: date)
-        
-        return newDateString
     }
 }

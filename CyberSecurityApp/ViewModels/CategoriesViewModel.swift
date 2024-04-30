@@ -8,24 +8,23 @@
 import Foundation
 
 final class CategoriesViewModel: ObservableObject {
-    let dataFetcher = CategoriesDataFetcher()
+    let dataFetcher: CategoriesDataFetcher
     
     @Published var categories: [String: CategoryModel] = [:]
     @Published var isLoading = true
     
-    func getCategories() async throws {
+    init(dataFetcher: CategoriesDataFetcher = CategoriesDataFetcher()) {
+        self.dataFetcher = dataFetcher
+    }
+    
+    func getCategories() async {
         do {
             let response = try await dataFetcher.getCategories()
             
             guard let response = response, !response.isEmpty else { return }
             //TODO: try to handle it by "for ASYNC _ in"
-            //            var asyncTasks = [Task<[CategoryNotification], Error>]()
-            //            for category in response {
-            //                asyncTasks.append(Task {
-            //                    try await dataFetcher.getNotifications(categoryId: category.id, page: 1, pageSize: 3)
-            //                })
-            //            }
-            
+//            var asyncNotificaitonTasks = [Task<[CategoryNotificationModel], Error>]()
+
             async let networkNotifications = dataFetcher.getNotifications(categoryId: response[0].id)
             async let browserNotifications = dataFetcher.getNotifications(categoryId: response[1].id)
             

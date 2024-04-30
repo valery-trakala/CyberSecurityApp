@@ -37,7 +37,7 @@ struct CategoryModel {
     var nofications: [CategoryNotificationModel]
 }
 
-struct AllNotificationsSectionModel {
+struct NotificationsSectionModel {
     var notifications: [CategoryNotificationModel]
     var date: String
 }

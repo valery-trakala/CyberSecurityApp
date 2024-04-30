@@ -7,20 +7,26 @@
 
 import Foundation
 
+
 final class CategoriesDataFetcher {
     func getCategories() async throws -> [CategoriesResponse]? {
-        let path = "https://threats.chipp.dev/categories"
-        
-        guard let url = URL(string: path) else {
-            print("Invalid URL")
+        do {
+            let path = "https://threats.chipp.dev/categories"
+            
+            guard let url = URL(string: path) else {
+                print("Invalid URL")
+                return nil
+            }
+            let request = createRequest(url: url, params: nil)
+            
+            let (data, _) = try await URLSession.shared.data(for: request)
+            guard let response = decodeJSON(type: [CategoriesResponse].self, data: data) else { return nil }
+            
+            return response
+        } catch {
+            print(error.localizedDescription)
             return nil
         }
-        let request = createRequest(url: url, params: nil)
-        
-        let (data, _) = try await URLSession.shared.data(for: request)
-        guard let response = decodeJSON(type: [CategoriesResponse].self, data: data) else { return nil }
-        
-        return response
     }
     
     func getNotifications(categoryId: Int, page: Int = 1, pageSize: Int = 3) async throws -> [CategoryNotificationModel]? {

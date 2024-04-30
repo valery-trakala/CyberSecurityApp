@@ -21,6 +21,7 @@
 		CC0243E52BE0DE3E006F5DAF /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E42BE0DE3E006F5DAF /* NotificationCell.swift */; };
 		CC0243E72BE0DE71006F5DAF /* ViewAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E62BE0DE71006F5DAF /* ViewAllCell.swift */; };
 		CC0243E92BE0DECC006F5DAF /* AllCategoryNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E82BE0DECC006F5DAF /* AllCategoryNotificationsViewModel.swift */; };
+		CC0243EC2BE11D9C006F5DAF /* DateFormatterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243EB2BE11D9C006F5DAF /* DateFormatterHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		CC0243E42BE0DE3E006F5DAF /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		CC0243E62BE0DE71006F5DAF /* ViewAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllCell.swift; sourceTree = "<group>"; };
 		CC0243E82BE0DECC006F5DAF /* AllCategoryNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryNotificationsViewModel.swift; sourceTree = "<group>"; };
+		CC0243EB2BE11D9C006F5DAF /* DateFormatterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 		CC0243A82BDFFF8B006F5DAF /* CyberSecurityApp */ = {
 			isa = PBXGroup;
 			children = (
+				CC0243EA2BE11D8C006F5DAF /* Helpers */,
 				CC0243D72BE0028C006F5DAF /* Services */,
 				CC0243D52BE00209006F5DAF /* Views */,
 				CC0243D42BE001FA006F5DAF /* ViewModels */,
@@ -178,6 +181,14 @@
 				CC0243DC2BE00469006F5DAF /* CategoriesDataFetcher.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		CC0243EA2BE11D8C006F5DAF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CC0243EB2BE11D9C006F5DAF /* DateFormatterHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 				CC0243AA2BDFFF8B006F5DAF /* CyberSecurityAppApp.swift in Sources */,
 				CC0243DF2BE0080A006F5DAF /* CategoriesViewModel.swift in Sources */,
 				CC0243E32BE0DE04006F5DAF /* AllCategoryNotificationsView.swift in Sources */,
+				CC0243EC2BE11D9C006F5DAF /* DateFormatterHelper.swift in Sources */,
 				CC0243E12BE00BBE006F5DAF /* CategoriesResponse.swift in Sources */,
 				CC0243DD2BE00469006F5DAF /* CategoriesDataFetcher.swift in Sources */,
 				CC0243E52BE0DE3E006F5DAF /* NotificationCell.swift in Sources */,

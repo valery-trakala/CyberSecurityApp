@@ -41,7 +41,7 @@ struct AllCategoryNotificationsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             Task {
-                try await viewModel.getCategories()
+                await viewModel.getCategories()
             }
         }
     }
