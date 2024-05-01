@@ -31,7 +31,7 @@ struct AllCategoryNotificationsView: View {
                                     date: viewModel.dateFormatterHelper.formatDate(date: notification.date, to: "h:mm:ss a"),
                                     color: notification.severity)
                                 .onAppear {
-                                    if viewModel.isLastNotification(notification), viewModel.isAllDataLoaded() {
+                                    if viewModel.isLastNotification(notification), !viewModel.isAllDataLoaded() {
                                         viewModel.isNextPageLoading = true
                                         Task {
                                             await viewModel.getCategories()
