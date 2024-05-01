@@ -81,6 +81,6 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
     }
     
     func isAllDataLoaded() -> Bool {
-        return loadedNotificationsCount != totalNotificationsCount
+        return loadedNotificationsCount == totalNotificationsCount
     }
 }
