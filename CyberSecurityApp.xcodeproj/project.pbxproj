@@ -22,6 +22,8 @@
 		CC0243E72BE0DE71006F5DAF /* ViewAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E62BE0DE71006F5DAF /* ViewAllCell.swift */; };
 		CC0243E92BE0DECC006F5DAF /* AllCategoryNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243E82BE0DECC006F5DAF /* AllCategoryNotificationsViewModel.swift */; };
 		CC0243EC2BE11D9C006F5DAF /* DateFormatterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0243EB2BE11D9C006F5DAF /* DateFormatterHelper.swift */; };
+		CCE590F62BE2ACCC006F26E0 /* DataFormaterHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE590F52BE2ACCC006F26E0 /* DataFormaterHelperTest.swift */; };
+		CCE590F92BE2B49A006F26E0 /* AllCategoryNotificationsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE590F82BE2B49A006F26E0 /* AllCategoryNotificationsViewModelTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		CC0243E62BE0DE71006F5DAF /* ViewAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllCell.swift; sourceTree = "<group>"; };
 		CC0243E82BE0DECC006F5DAF /* AllCategoryNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryNotificationsViewModel.swift; sourceTree = "<group>"; };
 		CC0243EB2BE11D9C006F5DAF /* DateFormatterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterHelper.swift; sourceTree = "<group>"; };
+		CCE590F52BE2ACCC006F26E0 /* DataFormaterHelperTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormaterHelperTest.swift; sourceTree = "<group>"; };
+		CCE590F82BE2B49A006F26E0 /* AllCategoryNotificationsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryNotificationsViewModelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 		CC0243B92BDFFF8C006F5DAF /* CyberSecurityAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				CCE590F72BE2B46C006F26E0 /* TestAllCategoryNotificationsViewModel */,
+				CCE590F42BE2AC8E006F26E0 /* TestDataFormatHelper */,
 				CC0243BA2BDFFF8C006F5DAF /* CyberSecurityAppTests.swift */,
 			);
 			path = CyberSecurityAppTests;
@@ -189,6 +195,22 @@
 				CC0243EB2BE11D9C006F5DAF /* DateFormatterHelper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CCE590F42BE2AC8E006F26E0 /* TestDataFormatHelper */ = {
+			isa = PBXGroup;
+			children = (
+				CCE590F52BE2ACCC006F26E0 /* DataFormaterHelperTest.swift */,
+			);
+			path = TestDataFormatHelper;
+			sourceTree = "<group>";
+		};
+		CCE590F72BE2B46C006F26E0 /* TestAllCategoryNotificationsViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CCE590F82BE2B49A006F26E0 /* AllCategoryNotificationsViewModelTest.swift */,
+			);
+			path = TestAllCategoryNotificationsViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +361,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC0243BB2BDFFF8C006F5DAF /* CyberSecurityAppTests.swift in Sources */,
+				CCE590F62BE2ACCC006F26E0 /* DataFormaterHelperTest.swift in Sources */,
+				CCE590F92BE2B49A006F26E0 /* AllCategoryNotificationsViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
