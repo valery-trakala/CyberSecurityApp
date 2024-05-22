@@ -11,7 +11,8 @@ struct AllCategoryNotificationsView: View {
     let type: String
     
     @StateObject private var viewModel: AllCategoryNotificationsViewModel
-    
+    //observedobject
+    //state
     init(for categoryId: Int, type: String, totalCount: Int) {
         self.type = type
         self._viewModel = StateObject(wrappedValue: AllCategoryNotificationsViewModel(for: categoryId, totalCount: totalCount))
@@ -30,12 +31,18 @@ struct AllCategoryNotificationsView: View {
                                     type: notification.type,
                                     date: viewModel.dateFormatterHelper.formatDate(date: notification.date, to: "h:mm:ss a"),
                                     color: notification.severity)
+                                
+                                
                                 .onAppear {
                                     if viewModel.isLastNotification(notification), !viewModel.isAllDataLoaded() {
                                         viewModel.isNextPageLoading = true
                                         Task {
+                                            sleep(5)
                                             await viewModel.getCategories()
+                                            print(20)
                                         }
+                                        print(0)
+                                        
                                     }
                                 }
                             }

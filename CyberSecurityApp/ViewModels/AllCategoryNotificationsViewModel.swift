@@ -40,7 +40,7 @@ final class AllCategoryNotificationsViewModel: ObservableObject {
             guard let response = response, !response.isEmpty else { return }
             loadedNotificationsCount += response.count
             
-            DispatchQueue.main.async { [weak self] in
+            Task { @MainActor [weak self] in
                 guard let self = self else { return }
                 
                 let sections = self.createNotificationsSectionsFromResponse(response: response)
