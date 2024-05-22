@@ -42,10 +42,7 @@ final class CategoriesDataFetcher: DataFetcherProtocol {
     func getNotifications(categoryId: Int, page: Int = 1, pageSize: Int = 3) async throws -> [CategoryNotificationModelResponse]? {
         let path = "https://threats.chipp.dev/categories/\(categoryId)/threats"
         
-        guard let url = URL(string: path) else {
-            print("Invalid URL")
-            return nil
-        }
+        let url = URL(string: path)!
         
         let params = ["page": String(page), "pageSize": String(pageSize)]
         let request = createRequest(url: url, params: params)
